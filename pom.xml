@@ -20,9 +20,9 @@
   <url>https://wiki.openmrs.org/x/FQ4z</url>
 
   <scm>
-    <connection>scm:git:git@github.com:i-tech-uw/openmrs-module-labonfhir.git</connection>
-    <developerConnection>scm:git:git@github.com:i-tech-uw/openmrs-module-labonfhir.git</developerConnection>
-    <url>https://github.com/i-tech-uw/openmrs-module-labonfhir/</url>
+    <connection>scm:git:git@github.com:isanteplus/openmrs-module-isanteplus-labonfhir.git</connection>
+    <developerConnection>scm:git:git@github.com:isanteplus/openmrs-module-isanteplus-labonfhir.git</developerConnection>
+    <url>https://github.com/isanteplus/openmrs-module-isanteplus-labonfhir/</url>
   </scm>
 
   <modules>
@@ -187,13 +187,13 @@
         <repository>
           <id>github-packages</id>
           <name>Github Maven Repo</name>
-          <url>https://maven.pkg.github.com/i-tech-uw/openmrs-module-labonfhir</url>
+          <url>https://maven.pkg.github.com/isanteplus/openmrs-module-isanteplus-labonfhir</url>
           <uniqueVersion>false</uniqueVersion>
         </repository>
         <snapshotRepository>
           <id>github-packages</id>
           <name>Github Maven Repo</name>
-          <url>https://maven.pkg.github.com/i-tech-uw/openmrs-module-labonfhir</url>
+          <url>https://maven.pkg.github.com/isanteplus/openmrs-module-isanteplus-labonfhir</url>
           <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
       </distributionManagement>
@@ -202,7 +202,7 @@
         <repository>
           <id>github-packages</id>
           <name>Github Maven Repo</name>
-          <url>https://maven.pkg.github.com/i-tech-uw/openmrs-module-labonfhir</url>
+          <url>https://maven.pkg.github.com/isanteplus/openmrs-module-isanteplus-labonfhir</url>
         </repository>
       </repositories>
 

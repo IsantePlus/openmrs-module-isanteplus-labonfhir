@@ -1,7 +1,7 @@
-# OpenMRS Laboratory Workflows Module
+# iSantePlus Laboratory Workflows Module
 
 ## Overview
-This module provides support for FHIR-based communication between OpenMRS and a FHIR-enabled 
+This module provides support for FHIR-based communication between iSantePlus and a FHIR-enabled 
 Laboratory Information System (LIS) like OpenELIS.
 
 The laboratory workflows supported by this module are based on 

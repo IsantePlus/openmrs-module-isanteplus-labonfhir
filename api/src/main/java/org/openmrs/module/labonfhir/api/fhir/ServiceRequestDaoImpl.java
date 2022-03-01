@@ -21,8 +21,10 @@ import org.openmrs.module.fhir2.api.dao.impl.BaseFhirDao;
 import org.openmrs.module.fhir2.api.search.param.SearchParameterMap;
 import org.openmrs.module.labonfhir.LabOnFhirConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+@Primary
 @Component
 @Setter(AccessLevel.PACKAGE)
 public class ServiceRequestDaoImpl extends BaseFhirDao<Obs> implements FhirServiceRequestDao<Obs> {

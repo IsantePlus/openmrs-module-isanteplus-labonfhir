@@ -28,7 +28,7 @@ import org.openmrs.module.fhir2.api.FhirObservationService;
 import org.openmrs.module.fhir2.api.FhirTaskService;
 import org.openmrs.module.fhir2.api.dao.FhirObservationDao;
 import org.openmrs.module.fhir2.api.translators.ObservationReferenceTranslator;
-import org.openmrs.module.labonfhir.ISantePlusLabOnFHIRConfig;
+import org.openmrs.module.labonfhir.LabOnFhirConfig;
 import org.openmrs.scheduler.tasks.AbstractTask;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +48,10 @@ public class FetchTaskUpdates extends AbstractTask implements ApplicationContext
 	private IGenericClient client;
 
 	@Autowired
-	private ISantePlusLabOnFHIRConfig config;
-
+	private LabOnFhirConfig config;
+    
 	@Autowired
+	@Qualifier("labRestfulClientFactory")
 	private IRestfulClientFactory clientFactory;
 
 	@Autowired
@@ -129,7 +130,7 @@ public class FetchTaskUpdates extends AbstractTask implements ApplicationContext
 				openmrsTaskUuid = openelisTask.getIdentifierFirstRep().getValue();
 
 				// Find original openmrs task using Identifier
-				Task openmrsTask = taskService.getTaskByUuid(openmrsTaskUuid);
+				Task openmrsTask = taskService.get(openmrsTaskUuid);
 
 				// Only update if matching OpenMRS Task found
 				if(openmrsTask != null) {
@@ -144,7 +145,7 @@ public class FetchTaskUpdates extends AbstractTask implements ApplicationContext
 					}
 
 					// Save Task
-					openmrsTask = taskService.updateTask(openmrsTaskUuid, openmrsTask);
+					openmrsTask = taskService.update(openmrsTaskUuid, openmrsTask);
 
 					updatedTasks.add(openmrsTask);
 				}
@@ -175,7 +176,7 @@ public class FetchTaskUpdates extends AbstractTask implements ApplicationContext
 
 				diagnosticReport.setEncounter(encounterReference);
 
-				diagnosticReport = diagnosticReportService.saveDiagnosticReport(diagnosticReport);
+				diagnosticReport = diagnosticReportService.create(diagnosticReport);
 
 				outputList.add((new Task.TaskOutputComponent())
 						.setValue(new Reference()

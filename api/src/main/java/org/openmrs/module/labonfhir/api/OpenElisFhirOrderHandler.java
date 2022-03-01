@@ -1,20 +1,17 @@
 package org.openmrs.module.labonfhir.api;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Task;
-import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.Encounter;
-import org.openmrs.Obs;
+import org.openmrs.Order;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.fhir2.FhirConstants;
 import org.openmrs.module.fhir2.api.FhirTaskService;
-import org.openmrs.module.labonfhir.ISantePlusLabOnFHIRConfig;
+import org.openmrs.module.labonfhir.LabOnFhirConfig;
 import org.openmrs.module.labonfhir.api.fhir.OrderCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,19 +20,19 @@ import org.springframework.stereotype.Component;
 public class OpenElisFhirOrderHandler {
 
 	@Autowired
-	private ISantePlusLabOnFHIRConfig config;
+	private LabOnFhirConfig config;
 
 	@Autowired
 	private FhirTaskService taskService;
 
 	public void createOrder(Encounter encounter) throws OrderCreationException {
 		// Create References
-		List<Reference> basedOnRefs = encounter.getObs().stream().filter(config.isTestOrder()).map(obs -> {
-			AtomicReference<Obs> orderObs = new AtomicReference<>();
-			orderObs.set(obs);
+		List<Reference> basedOnRefs = encounter.getOrders().stream().map(order -> {
+			AtomicReference<Order> orders = new AtomicReference<>();
+			orders.set(order);
 
-			if (orderObs.get() != null) {
-				return newReference(orderObs.get().getUuid(), FhirConstants.SERVICE_REQUEST);
+			if (orders.get() != null) {
+				return newReference(orders.get().getUuid(), FhirConstants.SERVICE_REQUEST);
 			} else {
 				return null;
 			}
@@ -58,7 +55,7 @@ public class OpenElisFhirOrderHandler {
 
 		// Save the new Task Resource
 		try {
-			taskService.saveTask(newTask);
+			taskService.create(newTask);
 		} catch (DAOException e) {
 			throw new OrderCreationException("Exception occurred while creating task for encounter " + encounter.getId());
 		}
